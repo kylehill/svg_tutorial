@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      * {
+        -webkit-transition: all .5s linear;
+        transition: all .5s linear;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <div style="border:solid 1px black; width:300px; height:300px; margin:0px auto;">
+      <svg>
+        <!--
+          M = Move to (what you start at)
+          L = Line to (move pen to X Y)
+          H = Horizontal line to (one param, X)
+          V = Vertical line to (one param, Y)
+          Z = Closes path at end (optional)
+          
+          Lowercase letters = relative distances
+          Uppercase letters = absolute distances
+        -->
+        <path stroke="blue" stroke-width="5" fill="none" 
+          d="M 50 50 L 50 100"
+        />
+        <g stroke-width="2" stroke="black">
+          <circle fill="white" cx="50" cy="50" r="4" />
+          <circle fill="white" cx="50" cy="100" r="4" />
+        </g>
+      </svg>
+    </div>
+  </body>
+</html>

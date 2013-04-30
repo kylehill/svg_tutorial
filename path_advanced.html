@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      * {
+        -webkit-transition: all .5s linear;
+        transition: all .5s linear;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <div style="border:solid 1px black; width:500px; height:300px; margin:0px auto;">
+      <svg>
+        <!--
+          Q = Quadratic curve (Xc Yc, X1 Y1)
+          C = Bezier curve (oh god trust me just look it up)
+          A = Arc (rX, rY, x-rotation, large arc?, sweep?, X1 Y1)
+        -->
+        <path stroke="blue" stroke-width="5" fill="none" 
+          d="M 50 50 Q 125 125 50 200"
+        />
+        <path stroke="red" stroke-width="1" fill="none"
+          d="M 50 50 L 125 125 L 50 200"
+        />
+        <g stroke-width="2" stroke="black">
+          <circle fill="white" cx="50" cy="50" r="4" />
+          <circle fill="white" cx="50" cy="200" r="4" />
+        </g>
+        
+        <!-- Large arc with sweep -->
+        <path stroke="green" stroke-width="5" fill="white"
+          d="M 250 50 A 60 90 0 1 1 300 200"
+        />
+        <!-- Small arc with sweep -->
+        <path stroke="green" stroke-width="5" fill="lightgray"
+          d="M 250 50 A 60 90 0 0 1 300 200"
+        />
+        <!-- Large arc -->
+        <path stroke="purple" stroke-width="5" fill="white"
+          d="M 250 50 A 60 90 0 1 0 300 200"
+        />
+        <!-- Small arc -->
+        <path stroke="purple" stroke-width="5" fill="lightgray"
+          d="M 250 50 A 60 90 0 0 0 300 200"
+        />
+        
+        <g stroke-width="2" stroke="black">
+          <circle fill="white" cx="250" cy="50" r="4" />
+          <circle fill="white" cx="300" cy="200" r="4" />
+        </g>
+        
+      </svg>
+    </div>
+  </body>
+</html>
