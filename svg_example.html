@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      * {
+        -webkit-transition: all .5s linear;
+        transition: all .5s linear;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <div style="border:solid 1px black; width:300px; height:300px; margin:0px auto;">
+      <svg id="blake">
+        <circle cx="150" cy="150" r="2" fill="red" />
+        <circle cx="150" cy="100" r="2" fill="red" />
+        <circle cx="200" cy="150" r="2" fill="red" />
+      </svg>
+    </div>
+    <script>
+      var makeWedge = function(arcRadius, startX, startY, degreeFrom, degreeTo) {
+        
+        var pointOnPerimeter = function(degree) {
+          var x = startX + (arcRadius * Math.cos(Math.PI * degree/180));
+          var y = startY + (arcRadius * Math.sin(Math.PI * degree/180));
+          return [x, y].join(" ");
+        }
+        
+        var d = ["M", startX, startY].join(" ");
+        d += [" L", pointOnPerimeter(degreeFrom) ].join(" ");
+        return d + [" A", arcRadius, arcRadius, 0, (Math.abs(degreeTo - degreeFrom) > 180 ? 1 : 0), 1, pointOnPerimeter(degreeTo), "Z"].join(" ");
+      }
+    
+      // document.createElementNS(ns, "tag")
+      // element.setAttributeNS(null, "attribute", "value")
+      var ns = "http://www.w3.org/2000/svg";
+      
+      var svg = document.getElementById("blake");
+      
+      var path = document.createElementNS(ns, "path");
+      path.setAttributeNS(null, "stroke", "none");
+      path.setAttributeNS(null, "fill", "lime");
+      path.setAttributeNS(null, "d", makeWedge(50, 150, 150, 0, 90))
+      path.setAttributeNS(null, "transform", "rotate(-90, 150, 150)")
+      
+      svg.appendChild(path);
+      
+    </script>
+  </body>
+</html>
