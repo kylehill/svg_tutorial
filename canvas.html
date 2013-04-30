@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      * {
+        -webkit-transition: all .5s linear;
+        transition: all .5s linear;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <div style="border:solid 1px black; width:300px; height:300px; margin:0px auto;">
+      <canvas id="blake" width="300" height="300" />
+    </div>
+    <script>
+      canvas = document.getElementById("blake").getContext("2d");
+      canvas.strokeRect(50, 50, 50, 50);
+      canvas.fillRect(50, 150, 50, 50);
+      canvas.strokeStyle = "yellow";
+      canvas.fillStyle = "blue";
+      canvas.strokeRect(150, 50, 50, 50);
+      canvas.fillRect(150, 150, 50, 50);
+      
+      canvas.strokeStyle = "red";
+      canvas.lineWidth = 10;
+      
+      canvas.beginPath();
+      canvas.moveTo(125, 125);
+      canvas.lineTo(125, 25);
+      canvas.lineTo(25, 25);
+      canvas.lineTo(25, 125);
+      canvas.stroke()
+      
+    </script>
+  </body>
+</html>
