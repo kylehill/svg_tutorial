@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      * {
+        -webkit-transition: all .5s linear;
+        transition: all .5s linear;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <div style="border:solid 1px black; width:300px; height:300px; margin:0px auto;">
+      <svg id="cody">
+      </svg>
+    </div>
+    <script>
+      // Note -- when creating elements or updating attributes within SVG, you need to use these calls:
+      // document.createElementNS(ns, "tag")
+      // element.setAttributeNS(null, "attribute", "value")
+      
+      var ns = "http://www.w3.org/2000/svg";
+      
+      // Array of colors we'll rotate through
+      var colors = ["blue", "red", "green", "yellow", "purple", "teal", "orange"];
+      var wedgesSoFar = 0;
+      
+      // Get the svg element in Javascript (hi, Cody!)
+      var svg = document.getElementById("cody");
+      
+      
+      /* Function to create the "d" attribute for a pie wedge shape using a path.
+        arcRadius: the radius of the circle we're creating a pie wedge "from"
+        startX, startY: x and y coordinates of the center of said circle
+        degreeFrom, degreeTo: what position on the perimeter of the circle we want to create
+         -- Remember, 0 degrees = right-most point on the perimeter of the circle
+      */
+      var makeWedge = function(arcRadius, startX, startY, degreeFrom, degreeTo) {
+        
+        // This is the function that returns the X and Y coordinates of a point on the perimeter
+        // of a circle, given the degree. Just trust me on this one.
+        var pointOnPerimeter = function(degree) {
+          var x = startX + (arcRadius * Math.cos(Math.PI * degree/180));
+          var y = startY + (arcRadius * Math.sin(Math.PI * degree/180));
+          return [x, y].join(" ");
+        }
+        
+        // Starts building the "d" attribute for the path -- move to the center
+        var d = ["M", startX, startY].join(" ");
+        
+        // Adds in the first point on the perimeter and strokes a line to it
+        d += [" L", pointOnPerimeter(degreeFrom) ].join(" ");
+        
+        // Adds in the arc to the second point on the perimeter
+        // Closes the path with Z at the end, which automagically strokes a line to the first, center point
+        return d + [" A", arcRadius, arcRadius, 0, (Math.abs(degreeTo - degreeFrom) > 180 ? 1 : 0), 1, pointOnPerimeter(degreeTo), "Z"].join(" ");
+      };
+      
+      /* Function to actually create the path element -- mostly standardized properties
+       Variable props = the color fill (rotating through the colors array)
+                        the path being traversed, embodied in the "d" attribute       
+      */
+      var makeMeAWedgeThingPlease = function(degreeFrom, degreeTo) {
+        var path = document.createElementNS(ns, "path");
+        path.setAttributeNS(null, "stroke", "white");
+        path.setAttributeNS(null, "stroke-width", "3");
+        path.setAttributeNS(null, "fill", colors[wedgesSoFar % colors.length]);
+        path.setAttributeNS(null, "d", makeWedge(100, 150, 150, degreeFrom, degreeTo))
+        
+        // 0 degrees on the right is confusing, just rotate everything so 0 is at the top
+        path.setAttributeNS(null, "transform", "rotate(-90, 150, 150)")
+        
+        wedgesSoFar++;
+
+        // Adds the element we've just created to the SVG
+        svg.appendChild(path);
+      };
+      
+      /* Function to iterate through the numeric members of an array,
+        figuring out what percentage of the total of the array they represent,
+        and then calling the wedge creation function with each member of the array */
+      var makeMeAllTheWedgesPlease = function(arr) {
+        var degreesSoFar = 0;
+        
+        var totalOfArray = 0;
+        for (var i = 0; i < arr.length; i++) {
+          totalOfArray += arr[i];
+        }
+        
+        for (var i = 0; i < arr.length; i++) {
+          var pct = arr[i] / totalOfArray;
+          var degrees = (360 * pct);
+          makeMeAWedgeThingPlease(degreesSoFar, (degreesSoFar + degrees));
+          degreesSoFar += degrees;
+        }
+      };
+      
+      // Actually call that last function. Whew!
+      makeMeAllTheWedgesPlease([80, 60, 70, 90, 100]);
+      
+    </script>
+  </body>
+</html>
